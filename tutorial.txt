@@ -1,0 +1,1 @@
+https://hackernoon.com/creating-a-j2ee-crud-app-in-10-steps-with-jsf-primefaces-jpa-mysql-39a1421b8845

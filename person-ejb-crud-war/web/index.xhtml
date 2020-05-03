@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<!--
+To change this license header, choose License Headers in Project Properties.
+To change this template file, choose Tools | Templates
+and open the template in the editor.
+-->
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:f="http://xmlns.jcp.org/jsf/core">
+    <h:head>
+        <title>My People</title>
+    </h:head>
+    <h:body>
+        <h1>People</h1>
+        <h:form>
+            <h:panelGrid columns="12" cellpadding="5">
+                <h:outputText value="Name " />
+                <p:inputText value="#{personController.name}"/>
+                <p:commandButton value="Add" icon="fa fa-fw fa-plus" action="#{personController.createPerson()}"/>
+            </h:panelGrid>
+        </h:form>
+        
+        <h:form  id="form">
+            <p:dataTable value="#{personController.getPeople()}" var="person" style="margin: 2em;" rowKey="#{person.id}">
+                <p:column headerText="Name">
+                    <h:outputText value="#{person.name}"/>
+                </p:column>
+                <p:column style="width:100px;text-align: center">
+                    <p:commandButton icon="fa fa-pencil" update=":form:personEdit" oncomplete="PF('editDialog').show()">
+                        <f:setPropertyActionListener value="#{person}" target="#{personController.selectedPerson}"/>
+                    </p:commandButton>
+                    <p:commandButton action="#{personController.deletePerson(person)}" icon="fa fa-trash"></p:commandButton>
+                </p:column>
+            </p:dataTable>
+            <p:dialog header="Edit Person" widgetVar="editDialog" modal="true" showEffect="fade" hideEffect="fade" resizable="false">
+                <p:outputPanel id="personEdit" style="text-align:center;">
+                    <p:panelGrid columns="2" rendered="#{personController.selectedPerson.id > 0}" columnClasses="label,value">
+                        <h:outputText value="Name: " />
+                        <p:inputText value="#{personController.selectedPerson.name}" />
+                        <p:commandButton value="Update" icon="fa fa-fw fa-pencil" action="#{personController.updatePerson()}"/>
+                    </p:panelGrid>
+                </p:outputPanel>
+            </p:dialog>
+        </h:form>
+    </h:body>
+</html>
